@@ -37,16 +37,16 @@ function latest_diagonal(t::ClaimTriangle)
 	return [v[end] for v in t.values]
 end
 
-function link_ratio(v::Vector)
-	lr = zeros(length(v)-1)
-	for i in 2:length(v)
-		lr[i-1] = v[i] / v[i-1]
-	end
-	return lr
+function link_ratio(::CumulativeTriangle,v::Vector)
+	v[2:end] ./ v[1:end-1]
+end
+
+function link_ratio(::IncrementalTriangle,v::Vector)
+	cumsum(v)[2:end] ./ v[1:end-1]
 end
 	
 function link_ratio(t::ClaimTriangle)
-    return [link_ratio(v) for v in t.values[1:end-1]]
+    return [link_ratio(t.type,v) for v in t.values[1:end-1]]
 end
 
 end
