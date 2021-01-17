@@ -14,6 +14,7 @@ struct IncrementalTriangle <: TriangleType end
 
 struct ClaimTriangle
     origin_indices
+	development_indices
     values
     type::TriangleType
     
@@ -27,6 +28,7 @@ function ClaimTriangle(df,origin,development,values,type)
 	
 	return ClaimTriangle(
 			sort!(unique(df.origin)),
+			sort!(unique(df.origin),rev=true),
 			vals,
             type
 	)
@@ -49,4 +51,8 @@ function link_ratio(t::ClaimTriangle)
     return [link_ratio(t.type,v) for v in t.values[1:end-1]]
 end
 
+
+function valuation_date(t::ClaimTriangle)
+	return last(t.development_indices)
+end
 end
