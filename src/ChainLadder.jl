@@ -13,25 +13,35 @@ struct CumulativeTriangle <: TriangleType end
 struct IncrementalTriangle <: TriangleType end
 
 struct ClaimTriangle
-    origin_indices
-	development_indices
-    values
-    type::TriangleType
-    
+	origin
+	development
+	claims
+    kind::TriangleType
 end
 
-function ClaimTriangle(df,origin,development,values,type)
-	sort!(df,[origin,order(development, rev=true)])
-	vals = map(groupby(df,origin)) do subdf
-		return reverse(subdf[:,values])
+function Claims(origin, development,values;kind=nothing)
+	origin_indices = sort!(unique(origin))
+	dev_indices = sort!(unique(development))
+	o_loc = indexin(origin,origin_indices)
+	d_loc = indexin(development,dev_indices)
+	m = length(origin_indices)
+	n = length(dev_indices)
+	m = Array{Union{Missing, eltype(values)}}(missing, m, n)
+	fill!(m,missing)
+	for (o,d,v) in zip(o_loc,d_loc,values)
+		@show o,d,v
+		m[o,d-o+1] = v
 	end
-	
-	return ClaimTriangle(
-			sort!(unique(df.origin)),
-			sort!(unique(df.origin),rev=true),
-			vals,
-            type
-	)
+	#use a heuristic 
+	if isnothing(kind)
+		if sum(skipmissing(diff(m,dims=2) .>= 0)) / sum(.~ismissing.(diff(m,dims=2))) > .95
+			kind = CumulativeTriangle()
+		else
+			kind = IncrementalTriangle()
+		end
+	end
+
+	return ClaimTriangle(origin_indices,dev_indices,m,kind)
 end
 
 
