@@ -2,7 +2,7 @@ module ChainLadder
 
 using DataFrames
 
-export ClaimTriangle,
+export ClaimTriangle, Claims,
     latest_diagonal,
     IncrementalTriangle, CumulativeTriangle,
     link_ratio
@@ -29,7 +29,6 @@ function Claims(origin, development,values;kind=nothing)
 	m = Array{Union{Missing, eltype(values)}}(missing, m, n)
 	fill!(m,missing)
 	for (o,d,v) in zip(o_loc,d_loc,values)
-		@show o,d,v
 		m[o,d-o+1] = v
 	end
 	#use a heuristic 
@@ -46,23 +45,32 @@ end
 
 
 function latest_diagonal(t::ClaimTriangle)
-	return [v[end] for v in t.values]
+	return [row[findlast(x -> !ismissing(x),row)] for row in eachrow(t.claims)]
 end
 
-function link_ratio(::CumulativeTriangle,v::Vector)
+function link_ratio(::CumulativeTriangle,v)
 	v[2:end] ./ v[1:end-1]
 end
 
-function link_ratio(::IncrementalTriangle,v::Vector)
+function link_ratio(::IncrementalTriangle,v)
 	cumsum(v)[2:end] ./ v[1:end-1]
 end
 	
 function link_ratio(t::ClaimTriangle)
-    return [link_ratio(t.type,v) for v in t.values[1:end-1]]
+	m,n = size(t.claims)
+	lr = similar(t.claims,m-1,n-1)
+
+	for i in 1:m-1
+		for j in 2:n
+			lr[i,j-1] = t.claims[i,j] / t.claims[i,j-1]
+		end
+	end
+	return lr
 end
 
 
 function valuation_date(t::ClaimTriangle)
 	return last(t.development_indices)
 end
+
 end
