@@ -19,6 +19,9 @@ raa = CSV.File("data/raa.csv") |> DataFrame
     @test all(age_to_age(t) .≈ age_ratios)
 
 
+    lin = LossDevelopmentFactor(t; tail = 1.05)
+
+    @test last(lin.ratios) == 1.05
 
     lin = LossDevelopmentFactor(t)
 
