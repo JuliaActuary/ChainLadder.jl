@@ -3,12 +3,8 @@ uuid = "80b912e8-4419-4152-9910-58fcfb6515ad"
 authors = ["Alec Loudenback <alecloudenback@gmail.com> and contributors"]
 version = "0.1.1"
 
-[deps]
-DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-
 [compat]
 julia = "^1.5"
-DataFrames = "^0.22"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
