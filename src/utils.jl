@@ -42,3 +42,8 @@ end
 # function Base.show(io,t::C) where {C<:ClaimsTriangle}
 # 	show(io,pretty_table(t.claims,row_names = string.(t.origin), header = string.(t.development)))
 # end
+
+function sampledata(name)
+    rootpath = Artifacts.artifact"sample_data"
+    open(joinpath(rootpath, "$name.csv"))
+end

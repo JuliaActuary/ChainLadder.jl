@@ -1,6 +1,7 @@
 module ChainLadder
 
 import GLM
+import Artifacts
 
 export Claims,
     latest_diagonal,

@@ -3,7 +3,12 @@ using CSV
 using Test
 using DataFrames
 
-raa = CSV.File("data/raa.csv") |> DataFrame
+raa = let
+    r = ChainLadder.sampledata("raa")
+    CSV.read(r, DataFrame)
+end
+
+
 @testset "ChainLadder.jl" begin
     t = CumulativeTriangle(raa.origin, raa.development, raa.values)
     @test Claims(raa.origin, raa.development, raa.values) isa CumulativeTriangle
