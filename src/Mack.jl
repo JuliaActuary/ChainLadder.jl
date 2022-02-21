@@ -68,3 +68,7 @@ function outstanding_loss(t::ClaimsTriangle, fit::LossDevelopmentFactor)
     # sum the ultimate claims
     return total_loss(t, fit) - sum(latest_diagonal(t))
 end
+
+function LDF(fit::LossDevelopmentFactor)
+    return reverse!(cumprod(fit.ratios))
+end

@@ -22,6 +22,7 @@ raa = CSV.File("data/raa.csv") |> DataFrame
     lin = LossDevelopmentFactor(t; tail = 1.05)
 
     @test last(lin.ratios) == 1.05
+    @test first(LDF(lin)) ≈ 9.3662455915901
 
     lin = LossDevelopmentFactor(t)
 
