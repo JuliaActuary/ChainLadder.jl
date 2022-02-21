@@ -1,10 +1,14 @@
 name = "ChainLadder"
 uuid = "80b912e8-4419-4152-9910-58fcfb6515ad"
 authors = ["Alec Loudenback <alecloudenback@gmail.com> and contributors"]
-version = "0.1.1"
+version = "0.2.0"
+
+[deps]
+GLM = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
 
 [compat]
-julia = "^1.5"
+julia = "^1.6"
+GLM = "^1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
