@@ -9,7 +9,7 @@ A development model using volume weighted age-to-age ratios of losses. Use log-r
 """
 function LossDevelopmentFactor(t::IncrementalTriangle; tail = nothing)
     c = CumulativeTriangle(t)
-    return LossDevelopmentFactor(c, tail)
+    return LossDevelopmentFactor(c, tail = tail)
 end
 
 function LossDevelopmentFactor(t::CumulativeTriangle; tail = nothing)
