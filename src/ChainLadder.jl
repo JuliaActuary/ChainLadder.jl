@@ -1,13 +1,14 @@
 module ChainLadder
 
 import GLM
+import Artifacts
 
 export Claims,
     latest_diagonal,
     IncrementalTriangle, CumulativeTriangle, Claims,
-    linkratio, age_to_age,
-	square, total_loss, outstanding_loss,
-	LossDevelopmentFactor
+    linkratio, age_to_age, LDF,
+    square, total_loss, outstanding_loss,
+    LossDevelopmentFactor
 
 include("Triangle.jl")
 include("utils.jl")

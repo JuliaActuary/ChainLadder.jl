@@ -1,0 +1,6 @@
+[sample_data]
+git-tree-sha1 = "26776ef03b714c8c3141b79f3639172e4eba2444"
+
+    [[sample_data.download]]
+    sha256 = "ad26a884dbad00e2dd1f4e637262b471d070aed1e6c0ec06cec9b91192c44b9b"
+    url = "https://gist.github.com/alecloudenback/103fcb835c6bc1a2914ef435fc24f0c9/raw/26776ef03b714c8c3141b79f3639172e4eba2444.tar.gz"
