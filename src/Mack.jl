@@ -35,7 +35,11 @@ function LossDevelopmentFactor(t::CumulativeTriangle; tail = nothing)
 
 end
 
+"""
+    LossDevelopmentFactor(t::ClaimsTriangle, fit::LossDevelopmentFactor)
 
+"Square" the triangle, or predict the claims in the unobserved periods.
+"""
 function square(t::CumulativeTriangle, fit::LossDevelopmentFactor)
     △ = t.claims
     rows, cols = size(△)
@@ -57,12 +61,23 @@ function square(t::CumulativeTriangle, fit::LossDevelopmentFactor)
 
 end
 
+"""
+    total_loss(t::ClaimsTriangle, fit::LossDevelopmentFactor)
+
+Sum the ultimate cumulative claims.
+"""
 function total_loss(t::ClaimsTriangle, fit::LossDevelopmentFactor)
 
     # sum the ultimate claims
     return sum(square(t, fit)[:, end])
 end
 
+
+"""
+    outstanding_loss(t::ClaimsTriangle, fit::LossDevelopmentFactor)
+
+The difference between the ultimate reported claims and the latest cumulative diagonal.
+"""
 function outstanding_loss(t::ClaimsTriangle, fit::LossDevelopmentFactor)
 
     # sum the ultimate claims
