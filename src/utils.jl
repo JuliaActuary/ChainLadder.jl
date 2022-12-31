@@ -1,3 +1,8 @@
+"""
+    latest_diagonal(t::ClaimsTriangle)
+
+Return the last development value for each origin period.
+"""
 function latest_diagonal(t::ClaimsTriangle)
     return [row[findlast(x -> !ismissing(x), row)] for row in eachrow(t.claims)]
 end
@@ -10,6 +15,11 @@ function linkratio(::IncrementalTriangle, v)
     cumsum(v)[2:end] ./ v[1:end-1]
 end
 
+"""
+    linkratio(t::ClaimsTriangle)
+
+Return the link ratios for a given triangle.
+"""
 function linkratio(t::ClaimsTriangle)
     m, n = size(t.claims)
     lr = similar(t.claims, m - 1, n - 1)
@@ -23,11 +33,20 @@ function linkratio(t::ClaimsTriangle)
 end
 
 
+"""
+    valuation_date(t::ClaimsTriangle)
 
+Return the last development index.
+"""
 function valuation_date(t::ClaimsTriangle)
     return last(t.development_indices)
 end
 
+"""
+    linkratio(t::ClaimsTriangle)
+
+Return the age to age ratios for a given triangle.
+"""
 function age_to_age(t)
     claims = t.claims
     n_origin, n_dev = size(claims)
